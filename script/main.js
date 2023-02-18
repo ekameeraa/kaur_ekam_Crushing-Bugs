@@ -14,28 +14,36 @@ let theButtons = document.querySelectorAll("#buttonHolder img"),
 // step 3
 // functionality always goes in the middle -> how do we want
 // the app to behave?
-function changeBGImage() {
-	// the `` is a JavaScript template string. It tells the JS enging to evaluate the expression
-	// inside the braces - run that little bit of code. In this case it's just pulling the ID of the
-	// button we clicked on and putting it at the end of the image name (0, 1, 2, 3)
-	// and updating the background-image style of the puzzle board element.
 
-	// bug fix #2 should go here. it's at most 3 lines of JS code.
-	puzzleBoard.style.backgroundImage = `url(images/backGround${this.id}.jpg)`;
+//bug2
+function changeBGImage() {
+    dropZones.forEach(zone => {
+        while (zone.firstChild) {
+            zone.removeChild(zone.firstChild);
+        }
+    });
+
+    puzzlePieces.forEach(piece => {
+        piece.classList.remove("dropped");
+        mainBoard.appendChild(piece);
+    });
+
+    puzzleBoard.style.backgroundImage = `url(images/backGround${this.id}.jpg)`;
 }
 
 function handleStartDrag() { 
-	console.log('started dragging this piece:', this);
-
-	// store a reference to the puzzle piece image that we're dragging
-	// so we can use it later and move it to a drop zone
-	draggedPiece = this;
+    console.log('started dragging this piece:', this);
+    draggedPiece = this;
 }
 
 function handleDragOver(e) { 
-	e.preventDefault(); // e is shorthand for event
-	// this overrides the default dragover behaviour
-	console.log('dragged over me'); 
+    e.preventDefault(); 
+    console.log('dragged over me');
+}
+
+function handleDrop(e) {
+    e.preventDefault();
+    console.log('dropped something on me');
 }
 
 // bug1
