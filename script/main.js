@@ -38,14 +38,25 @@ function handleDragOver(e) {
 	console.log('dragged over me'); 
 }
 
-function handleDrop(e) { 
-	e.preventDefault();
-	console.log('dropped something on me');
-	// bug fix #1 should go here, and it's at most 3 lines of JS code
+// bug1
+{const dropZone = this;
 
-	// this line is going to move the dragged piece from the left side of the board
-	// into whatever drop zone we choose. appendChild means "add element to the container"
-	this.appendChild(draggedPiece);
+// check if the drop zone has a piece already
+    const existingPiece = dropZone.querySelector('img');
+    if (existingPiece) {
+        puzzleBoard.insertBefore(draggedPiece, existingPiece);
+        dropZone.removeChild(existingPiece);
+        mainBoard.appendChild(existingPiece);
+    }
+
+    // add the dropped piece to the drop zone
+    dropZone.appendChild(draggedPiece);
+
+    // mark the piece as dropped
+    draggedPiece.classList.add("dropped");
+
+    // clear the draggedPiece reference
+    draggedPiece = null;
 }
 
 // step2
