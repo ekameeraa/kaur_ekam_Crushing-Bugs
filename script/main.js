@@ -10,42 +10,56 @@ let theButtons = document.querySelectorAll("#buttonHolder img"),
 	// because we need it in the handleDrop function
     draggedPiece = null; 
 
-
-// step 3
-// functionality always goes in the middle -> how do we want
-// the app to behave?
+//step3 
+//bug2
 function changeBGImage() {
-	// the `` is a JavaScript template string. It tells the JS enging to evaluate the expression
-	// inside the braces - run that little bit of code. In this case it's just pulling the ID of the
-	// button we clicked on and putting it at the end of the image name (0, 1, 2, 3)
-	// and updating the background-image style of the puzzle board element.
+    dropZones.forEach(zone => {
+        while (zone.firstChild) {
+            zone.removeChild(zone.firstChild);
+        }
+    });
 
-	// bug fix #2 should go here. it's at most 3 lines of JS code.
-	puzzleBoard.style.backgroundImage = `url(images/backGround${this.id}.jpg)`;
+    puzzlePieces.forEach(piece => {
+        piece.classList.remove("dropped");
+        mainBoard.appendChild(piece);
+    });
+
+    puzzleBoard.style.backgroundImage = `url(images/backGround${this.id}.jpg)`;
 }
 
 function handleStartDrag() { 
-	console.log('started dragging this piece:', this);
-
-	// store a reference to the puzzle piece image that we're dragging
-	// so we can use it later and move it to a drop zone
-	draggedPiece = this;
+    console.log('started dragging this piece:', this);
+    draggedPiece = this;
 }
 
 function handleDragOver(e) { 
-	e.preventDefault(); // e is shorthand for event
-	// this overrides the default dragover behaviour
-	console.log('dragged over me'); 
+    e.preventDefault(); 
+    console.log('dragged over me');
 }
 
-function handleDrop(e) { 
-	e.preventDefault();
-	console.log('dropped something on me');
-	// bug fix #1 should go here, and it's at most 3 lines of JS code
+function handleDrop(e) {
+    e.preventDefault();
+    console.log('dropped something on me');
 
-	// this line is going to move the dragged piece from the left side of the board
-	// into whatever drop zone we choose. appendChild means "add element to the container"
-	this.appendChild(draggedPiece);
+// bug1
+    const dropZone = this;
+
+// check if the drop zone has a piece already
+    const existingPiece = dropZone.querySelector('img');
+    if (existingPiece) {
+        puzzleBoard.insertBefore(draggedPiece, existingPiece);
+        dropZone.removeChild(existingPiece);
+        mainBoard.appendChild(existingPiece);
+    }
+
+    // add the dropped piece to the drop zone
+    dropZone.appendChild(draggedPiece);
+
+    // mark the piece as dropped
+    draggedPiece.classList.add("dropped");
+
+    // clear the draggedPiece reference
+    draggedPiece = null;
 }
 
 // step2
