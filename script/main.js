@@ -1,17 +1,14 @@
-// let theButton = document.queryselector ("#buttonOne")
-// step1
+//Step1
 let theButtons = document.querySelectorAll("#buttonHolder img"),
     theHeading = document.querySelector("#headLine h1"),
     puzzleBoard = document.querySelector(".puzzle-board"),
     puzzlePieces = document.querySelectorAll(".puzzle-pieces img"),
-    dropZones = document.querySelectorAll(".drop-zone"),
-    mainBoard = document.querySelector(".puzzle-pieces"),
-// store the dragged piece in a global variable
-	// because we need it in the handleDrop function
+    dropZones = document.querySelectorAll('.drop-zone'),
+    mainBoard = document.querySelector('.puzzle-pieces'),
+
     draggedPiece = null; 
 
-//step3 
-//bug2
+// bug1
 function changeBGImage() {
     dropZones.forEach(zone => {
         while (zone.firstChild) {
@@ -27,6 +24,7 @@ function changeBGImage() {
     puzzleBoard.style.backgroundImage = `url(images/backGround${this.id}.jpg)`;
 }
 
+// bug2
 function handleStartDrag() { 
     console.log('started dragging this piece:', this);
     draggedPiece = this;
@@ -41,10 +39,9 @@ function handleDrop(e) {
     e.preventDefault();
     console.log('dropped something on me');
 
-// bug1
     const dropZone = this;
 
-// check if the drop zone has a piece already
+    // check if the drop zone has a piece already
     const existingPiece = dropZone.querySelector('img');
     if (existingPiece) {
         puzzleBoard.insertBefore(draggedPiece, existingPiece);
@@ -62,7 +59,7 @@ function handleDrop(e) {
     draggedPiece = null;
 }
 
-// step2
+// step3
 theButtons.forEach(button => button.addEventListener("click", changeBGImage));
 
 puzzlePieces.forEach(piece => piece.addEventListener("dragstart", handleStartDrag));
