@@ -3,8 +3,8 @@ let theButtons = document.querySelectorAll("#buttonHolder img"),
     theHeading = document.querySelector("#headLine h1"),
     puzzleBoard = document.querySelector(".puzzle-board"),
     puzzlePieces = document.querySelectorAll(".puzzle-pieces img"),
-    dropZones = document.querySelectorAll('.drop-zone'),
-    mainBoard = document.querySelector('.puzzle-pieces'),
+    dropZones = document.querySelectorAll(".drop-zone"),
+    mainBoard = document.querySelector(".puzzle-pieces"),
 
     draggedPiece = null; 
 
